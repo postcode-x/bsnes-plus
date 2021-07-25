@@ -160,7 +160,7 @@ void CPUcore::disassemble_opcode(char *output, uint32 addr, bool hclocks) {
   char *s = output;
 
   pc.d = addr;
-  sprintf(s, "%.6x ", (uint32)pc.d);
+  // sprintf(s, "%.6x ", (uint32)pc.d);
 
   uint8 op  = dreadb(pc.d); pc.w++;
   uint8 op0 = dreadb(pc.d); pc.w++;
@@ -171,7 +171,9 @@ void CPUcore::disassemble_opcode(char *output, uint32 addr, bool hclocks) {
   #define a8   (regs.e || regs.p.m)
   #define x8   (regs.e || regs.p.x)
 
-  unsigned op_mode = cpuOpcodeInfo[op].mode;
+  sprintf(s, "%-14s ", SNESCPU::disassembleRaw(addr, a8, x8, op, op0, op1, op2)());
+
+  /*unsigned op_mode = cpuOpcodeInfo[op].mode;
   unsigned op_len  = SNESCPU::getOpcodeLength(a8, x8, op);
 
   sprintf(t, "%-14s ", SNESCPU::disassemble(addr, a8, x8, op, op0, op1, op2)());
@@ -181,13 +183,13 @@ void CPUcore::disassemble_opcode(char *output, uint32 addr, bool hclocks) {
     sprintf(t, "         ");
   else
     sprintf(t, "[%.6x] ", decode(op_mode, op24, addr));
-  strcat(s, t);
+  strcat(s, t);*/
   
   #undef op24
   #undef a8
   #undef x8
 
-  sprintf(t, "A:%.4x X:%.4x Y:%.4x S:%.4x D:%.4x DB:%.2x ",
+  /*sprintf(t, "A:%.4x X:%.4x Y:%.4x S:%.4x D:%.4x DB:%.2x ",
     regs.a.w, regs.x.w, regs.y.w, regs.s.w, regs.d.w, regs.db);
   strcat(s, t);
 
@@ -210,7 +212,7 @@ void CPUcore::disassemble_opcode(char *output, uint32 addr, bool hclocks) {
     sprintf(t, "V:%3d H:%4d F:%2d", cpu.vcounter(), cpu.hcounter(), cpu.framecounter());
   else
     sprintf(t, "V:%3d H:%3d F:%2d", cpu.vcounter(), cpu.hdot(), cpu.framecounter());
-  strcat(s, t);
+  strcat(s, t);*/
 }
 
 #endif
